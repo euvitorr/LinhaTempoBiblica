@@ -41,7 +41,7 @@
   },
   {
     "title": "Aliança Noética",
-    "description": "Benção: Vida estável sem dilúvios; <br> Maldição: aliança incondicional.",
+    "description": "Benção: Vida estável sem dilúvios; <br> Maldição: Divisão das Linguas.",
     "verse": "E disse Deus: Este é o sinal da aliança que ponho entre mim e vós e entre toda alma vivente, que está convosco, por gerações perpétuas. (Gênesis 9:12, NTV)",
     "background_image": "./noetic.png",
     "buttons": [{
@@ -57,7 +57,7 @@
   },
   {
     "title": "Aliança Abraâmica",
-    "description": "Benção: Descendência e terra prometidas; <br> Maldição: dificuldades se desobediente.",
+    "description": "Benção: Descendência e terra prometidas; <br> Maldição: Dificuldades se desobediente.",
     "verse": "E disse o SENHOR a Abrão: Sai-te da tua terra, da tua parentela e da casa de teu pai, para a terra que te mostrarei; e farei de ti uma grande nação, e abençoar-te-ei e engrandecerei o teu nome; e sê tu uma bênção. (Gênesis 12:1-2, NTV)",
     "background_image": "./abrahamic.png",
     "buttons": [{
