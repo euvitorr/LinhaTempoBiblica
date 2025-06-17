@@ -145,12 +145,13 @@
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
+        /* Cursors updated */
         .cursor-left {
-            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/left.png'), auto;
+            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/left.png'), w-resize;
         }
 
         .cursor-right {
-            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/right.png'), auto;
+            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/right.png'), e-resize;
         }
 
         /* Styles for info icon */
@@ -452,44 +453,42 @@
         }
 
         function updateCursor(e) {
-            if (!e || typeof e.clientX === 'undefined') return;
+            if (!e || typeof e.clientX === 'undefined' || totalSlides === 0) return;
 
             slider.classList.remove('cursor-left', 'cursor-right');
 
-            // --- Lógica aprimorada para o cursor ---
             const width = window.innerWidth;
             const clickSide = e.clientX < width / 2 ? 'left' : 'right';
 
-            if (currentIndex === 0) { // Primeiro slide
-                if (totalSlides > 1 && clickSide === 'right') { // Só seta para a direita se houver mais slides
-                    slider.classList.add('cursor-right');
+            // Lógica para o cursor na primeira ou última página, ou no meio
+            if (currentIndex === 0) { // No primeiro slide
+                if (totalSlides > 1) { // Se houver mais de um slide
+                    slider.classList.add('cursor-right'); // Apenas cursor para a direita
                 }
-            } else if (currentIndex === totalSlides - 1) { // Último slide
-                if (clickSide === 'left') { // Só seta para a esquerda
-                    slider.classList.add('cursor-left');
-                }
-            } else { // Slides do meio
+            } else if (currentIndex === totalSlides - 1) { // No último slide
+                slider.classList.add('cursor-left'); // Apenas cursor para a esquerda
+            } else { // Nos slides do meio
                 if (clickSide === 'left') {
                     slider.classList.add('cursor-left');
                 } else {
                     slider.classList.add('cursor-right');
                 }
             }
-            // --- Fim da lógica aprimorada para o cursor ---
         }
+
 
         function handleSlideClick(e) {
             if (isAnimating) return;
-
-            const width = window.innerWidth;
-            const clickedLeftHalf = e.clientX < width / 2;
-
-            let newIndex = currentIndex; // Inicia com o índice atual
 
             // Check if a button was clicked, if so, don't change slide
             if (e.target.closest('.action-button')) {
                 return; 
             }
+
+            const width = window.innerWidth;
+            const clickedLeftHalf = e.clientX < width / 2;
+
+            let newIndex = currentIndex; // Inicia com o índice atual
 
             if (clickedLeftHalf) { // Clicou na metade esquerda
                 if (currentIndex > 0) { // Se não for o primeiro slide
