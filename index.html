@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabalho de Teologia - Huios</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Merriweather', serif;
+            background-color: #1c1c1c;
+        }
+
+        .slider {
+            display: flex;
+            height: 100%;
+            /* A transição do transform será adicionada/removida via JS */
+        }
+
+        .slide {
+            min-width: 100%;
+            position: relative;
+            color: #fff;
+            display: flex;
+            flex-direction: column; /* Allows content and buttons to stack */
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            /* Transições para o efeito progressivo */
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out, filter 0.6s ease-out; /* Tempo ajustado */
+            transform: scale(1);
+            opacity: 0; /* Começa oculto por padrão, será mostrado pela classe active ou entering */
+            filter: blur(8px); /* Começa desfocado */
+        }
+
+        /* Slide que está atualmente visível e sem animação */
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            filter: blur(0px);
+        }
+
+        /* Slide que está saindo */
+        .slide.leaving {
+            opacity: 0; /* Desaparece */
+            transform: scale(0.95); /* Encolhe levemente */
+            filter: blur(10px); /* Forte desfoque ao sair */
+        }
+
+        /* Slide que está entrando */
+        .slide.entering {
+            opacity: 0; /* Ainda invisível, mas se preparando para entrar */
+            transform: scale(1.05); /* Preparando para zoom-in */
+            filter: blur(10px); /* Forte desfoque ao entrar */
+        }
+        
+        /* O slide que está para entrar e se torna visível */
+        .slide.entering-active {
+            opacity: 1; /* Aparece */
+            transform: scale(1); /* Vai para o tamanho normal */
+            filter: blur(0px); /* Fica nítido */
+        }
+
+        .slide:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            transition: opacity 0.4s ease-out;
+            z-index: 1;
+        }
+
+        .content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out; /* Sem atraso inicial no conteúdo */
+            opacity: 0; /* Conteúdo oculto por padrão */
+            transform: translateY(20px); /* Começa levemente abaixo */
+            margin-bottom: 25vh; /* Adjusts content position to make space for buttons */
+        }
+
+        /* Conteúdo aparece com o slide */
+        .slide.active .content,
+        .slide.entering-active .content {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Button container styles */
+        .button-container {
+            position: absolute;
+            bottom: 25%; /* 25% from the bottom of the slide */
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between buttons */
+            z-index: 3; /* Ensure buttons are above content overlay */
+            opacity: 0; /* Hidden by default */
+            transition: opacity 0.6s ease-out;
+        }
+
+        .slide.active .button-container,
+        .slide.entering-active .button-container {
+            opacity: 1; /* Show buttons when slide is active */
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #fff;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: scale(1.1);
+        }
+
+        .action-button img {
+            width: 80px; /* Adjust button image size */
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+
+        .action-button span {
+            font-size: 0.9em;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }
+
+        .cursor-left {
+            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/left.png'), auto;
+        }
+
+        .cursor-right {
+            cursor: url('https://img.icons8.com/ios-filled/50/ffffff/right.png'), auto;
+        }
+
+        /* Styles for info icon */
+        .info-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: #fff;
+            cursor: pointer;
+            z-index: 1000; /* Ensure it's above everything else */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal specific styles */
+        .modal-content {
+            background-color: #2c2c2c;
+            color: #fff;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0; /* Remove default padding to control header image */
+        }
+
+        .modal-header .btn-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10; /* Ensure close button is clickable */
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 1; /* Ensure it's visible */
+        }
+
+        .modal-header-image {
+            width: 100%;
+            max-height: 200px; /* Adjust as needed */
+            object-fit: cover;
+            border-top-left-radius: calc(0.3rem - 1px);
+            border-top-right-radius: calc(0.3rem - 1px);
+            /* Add this for optional display */
+            display: block; /* Default to block */
+        }
+
+        .modal-header-image.hidden {
+            display: none; /* Hide if no image */
+        }
+
+        .modal-title {
+            color: #fff;
+            margin-top: 15px; /* Space below image */
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .modal-body {
+            border-top: 1px solid #444; /* Separator below title */
+            padding-top: 20px;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #444;
+        }
+
+        .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%); /* Make close button white */
+        }
+
+        .nav-tabs {
+            border-bottom: none;
+        }
+
+        .nav-tabs .nav-link {
+            color: #ccc;
+            border: none;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .nav-tabs .nav-link.active {
+            color: #fff;
+            background-color: #3a3a3a;
+            border-color: #0d6efd; /* Bootstrap primary blue */
+        }
+
+        .nav-tabs .nav-link:hover {
+            border-color: #0d6efd;
+            color: #fff;
+        }
+
+        .tab-content {
+            padding: 1rem;
+            background-color: #3a3a3a;
+            border-radius: 0 0 0.375rem 0.375rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider" id="slider1"></div>
+
+    <div class="info-icon" data-bs-toggle="modal" data-bs-target="#infoModal">
+        <i class="fas fa-info-circle"></i>
+    </div>
+
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Linha do Tempo Virtual - Vitor Rios Rodrigues - 06/2025</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>ALIANÇA = Berith (heb.):</strong> Pacto</p>
+                    <hr>
+                    <ul class="nav nav-tabs mb-3" id="allianceTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1" type="button" role="tab" aria-controls="tab1" aria-selected="true">1. Troca de Nome</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2" type="button" role="tab" aria-controls="tab2" aria-selected="false">2. Troca de Túnica</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3" type="button" role="tab" aria-controls="tab3" aria-selected="false">3. Troca de Cinto</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab4-tab" data-bs-toggle="tab" data-bs-target="#tab4" type="button" role="tab" aria-controls="tab4" aria-selected="false">4. Termos Escritos</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab5-tab" data-bs-toggle="tab" data-bs-target="#tab5" type="button" role="tab" aria-controls="tab5" aria-selected="false">5. Imolação Animal</button>
+                        </li>
+                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab6-tab" data-bs-toggle="tab" data-bs-target="#tab6" type="button" role="tab" aria-controls="tab6" aria-selected="false">6. Passeio entre Partes</button>
+                        </li>
+                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab7-tab" data-bs-toggle="tab" data-bs-target="#tab7" type="button" role="tab" aria-controls="tab7" aria-selected="false">7. Cortes nas Mãos</button>
+                        </li>
+                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab8-tab" data-bs-toggle="tab" data-bs-target="#tab8" type="button" role="tab" aria-controls="tab8" aria-selected="false">8. Ceia</button>
+                        </li>
+                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab9-tab" data-bs-toggle="tab" data-bs-target="#tab9" type="button" role="tab" aria-controls="tab9" aria-selected="false">9. Árvore Plantada</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="allianceTabsContent">
+                        <div class="tab-pane fade show active" id="tab1" role="tabpanel" aria-labelledby="tab1-tab">
+                            <p><strong>1. Troca-se o nome:</strong> Ao fazer isso, era declarado que um passava a ter direito e obrigações sobre tudo o que dizia respeito ao nome do outro.</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab2" role="tabpanel" aria-labelledby="tab2-tab">
+                            <p><strong>2. Troca-se a túnica:</strong> Isso representava a troca da vida. "Minha vida agora é a tua vida."</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab3" role="tabpanel" aria-labelledby="tab3-tab">
+                            <p><strong>3. Troca-se o cinto:</strong> No cinto carregava-se as armas. Ao fazer essa troca, estava sendo representado que "a partir de agora, quem lutar com você estará lutando comigo."</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab4" role="tabpanel" aria-labelledby="tab4-tab">
+                            <p><strong>4. Escreve-se os termos:</strong> Os termos da aliança eram escritos, todas as obrigações das partes, bem como as bênçãos que estariam sobre cada um e as maldições caso a aliança fosse quebrada.</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab5" role="tabpanel" aria-labelledby="tab5-tab">
+                            <p><strong>5. Imola-se um animal:</strong> A representação aqui era "Que eu morra se quebrar esta aliança."</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab6" role="tabpanel" aria-labelledby="tab6-tab">
+                            <p><strong>6. Passeia-se entre as partes:</strong> O animal era partido no meio e um pedaço era colocado de frente para o outro. Então, os aliançados colocavam-se entre os dois pedaços, de costas um para o outro, e cada um de frente para um pedaço do animal, dando a volta entre os pedaços do animal, formando o símbolo do infinito. Simbolizando assim que a aliança era eterna e nada poderia invalidá-la.</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab7" role="tabpanel" aria-labelledby="tab7-tab">
+                            <p><strong>7. Cortes nas Mãos:</strong> Era feito um corte na mão de cada um e eles uniam as mãos para que o sangue se misturasse. Então, passavam cinzas sobre os cortes para que a cicatriz do corte se tornasse uma marca ainda mais evidente, para que todos soubessem que aquele era um homem de aliança.</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab8" role="tabpanel" aria-labelledby="tab8-tab">
+                            <p><strong>8. Ceia:</strong> Eles faziam uma refeição de pão e vinho. Comer junto sempre tem um sentido de pacto. O fato de partir um pão e comer tem o símbolo de união, e beber do mesmo vinho fala de tornar-se um.</p>
+                        </div>
+                        <div class="tab-pane fade" id="tab9" role="tabpanel" aria-labelledby="tab9-tab">
+                            <p><strong>9. Planta-se uma árvore:</strong> Por último, uma árvore era plantada como símbolo vivo da aliança. Sobre a árvore plantada derramava-se o sangue do animal imolado para que a árvore fosse marcada e se tornasse um monumento do testemunho daquela aliança.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="buttonInfoModal" tabindex="-1" aria-labelledby="buttonInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img id="modalHeaderImage" class="modal-header-image" src="" alt="Modal Header">
+                    <h5 class="modal-title" id="buttonInfoModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="buttonInfoModalBody">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script>
+        let currentIndex = 0;
+        const slider = document.getElementById('slider1');
+        let totalSlides = 0;
+        let slidesElements = []; 
+        let isAnimating = false; // Flag para evitar cliques múltiplos durante a animação
+
+        fetch('slides.json') // Assuming 'slides.json' is your file with the covenant data
+            .then(response => response.json())
+            .then(slidesData => {
+                totalSlides = slidesData.length;
+                slidesData.forEach((slide, index) => {
+                    const slideElement = document.createElement('div');
+                    slideElement.className = 'slide';
+                    slideElement.style.backgroundImage = `url('${slide.background_image}')`;
+
+                    const contentElement = document.createElement('div');
+                    contentElement.className = 'content';
+
+                    const titleElement = document.createElement('h1');
+                    titleElement.textContent = slide.title;
+
+                    const descriptionElement = document.createElement('p');
+                    descriptionElement.innerHTML = slide.description;
+
+                    contentElement.appendChild(titleElement);
+                    contentElement.appendChild(descriptionElement);
+                    slideElement.appendChild(contentElement);
+                    
+                    // --- Add Buttons Container ---
+                    if (slide.buttons && slide.buttons.length > 0) {
+                        const buttonContainer = document.createElement('div');
+                        buttonContainer.className = 'button-container';
+
+                        slide.buttons.forEach(buttonData => {
+                            const actionButton = document.createElement('button');
+                            actionButton.className = 'action-button';
+                            actionButton.innerHTML = `<img src="${buttonData.image}" alt="${buttonData.title}">`;
+                            actionButton.setAttribute('data-bs-toggle', 'modal');
+                            actionButton.setAttribute('data-bs-target', '#buttonInfoModal');
+                            actionButton.onclick = () => showButtonModal(buttonData);
+                            buttonContainer.appendChild(actionButton);
+                        });
+                        slideElement.appendChild(buttonContainer);
+                    }
+                    // --- End Add Buttons Container ---
+
+                    slider.appendChild(slideElement);
+                    slidesElements.push(slideElement);
+                });
+
+                // The first slide (Aliança Edênica) already starts active.
+                if (slidesElements[0]) {
+                    slidesElements[0].classList.add('active');
+                }
+                updateCursor({ clientX: window.innerWidth / 2 }); // Ensure cursor is correct on load.
+
+                slider.addEventListener('mousemove', updateCursor);
+                slider.addEventListener('click', handleSlideClick);
+                document.addEventListener('keydown', handleKeyDown);
+            })
+            .catch(error => console.error('Erro ao carregar o arquivo JSON:', error));
+
+        function showSlide(newIndex, animate = true) {
+            if (isAnimating || newIndex === currentIndex) return;
+
+            isAnimating = true;
+
+            const oldIndex = currentIndex;
+            currentIndex = newIndex;
+
+            if (!animate && newIndex === 0) {
+                 const offset = -newIndex * 100;
+                 slider.style.transition = 'none';
+                 slider.style.transform = `translateX(${offset}%)`;
+                 slidesElements[newIndex].classList.add('active');
+                 isAnimating = false;
+                 updateCursor({ clientX: window.innerWidth / 2 });
+                 return;
+            }
+
+            slidesElements[oldIndex].classList.add('leaving');
+            slidesElements[oldIndex].classList.remove('active');
+
+            setTimeout(() => {
+                slidesElements[oldIndex].classList.remove('leaving');
+                
+                const offset = -currentIndex * 100;
+                slider.style.transition = `transform 0.6s ease-out`; 
+                slider.style.transform = `translateX(${offset}%)`;
+
+                slidesElements[currentIndex].classList.add('entering-active');
+                
+                setTimeout(() => {
+                    slidesElements[currentIndex].classList.remove('entering-active');
+                    slidesElements[currentIndex].classList.add('active');
+                    
+                    slider.style.transition = 'none';
+                    isAnimating = false;
+                    updateCursor({ clientX: window.innerWidth / 2 }); 
+                }, 600); 
+            }, 600); 
+        }
+
+        function updateCursor(e) {
+            if (!e || typeof e.clientX === 'undefined') return;
+
+            slider.classList.remove('cursor-left', 'cursor-right');
+
+            // --- Lógica aprimorada para o cursor ---
+            const width = window.innerWidth;
+            const clickSide = e.clientX < width / 2 ? 'left' : 'right';
+
+            if (currentIndex === 0) { // Primeiro slide
+                if (totalSlides > 1 && clickSide === 'right') { // Só seta para a direita se houver mais slides
+                    slider.classList.add('cursor-right');
+                }
+            } else if (currentIndex === totalSlides - 1) { // Último slide
+                if (clickSide === 'left') { // Só seta para a esquerda
+                    slider.classList.add('cursor-left');
+                }
+            } else { // Slides do meio
+                if (clickSide === 'left') {
+                    slider.classList.add('cursor-left');
+                } else {
+                    slider.classList.add('cursor-right');
+                }
+            }
+            // --- Fim da lógica aprimorada para o cursor ---
+        }
+
+        function handleSlideClick(e) {
+            if (isAnimating) return;
+
+            const width = window.innerWidth;
+            const clickedLeftHalf = e.clientX < width / 2;
+
+            let newIndex = currentIndex; // Inicia com o índice atual
+
+            // Check if a button was clicked, if so, don't change slide
+            if (e.target.closest('.action-button')) {
+                return; 
+            }
+
+            if (clickedLeftHalf) { // Clicou na metade esquerda
+                if (currentIndex > 0) { // Se não for o primeiro slide
+                    newIndex--;
+                }
+            } else { // Clicou na metade direita
+                if (currentIndex < totalSlides - 1) { // Se não for o último slide
+                    newIndex++;
+                }
+            }
+            
+            // Só chama showSlide se houver uma mudança de índice válida
+            if (newIndex !== currentIndex) {
+                showSlide(newIndex);
+            } else {
+                // Se o clique não resultou em mudança de slide (ex: clicou na metade "errada" do primeiro/último),
+                // ainda queremos garantir que o cursor reflita o estado atual.
+                updateCursor(e); 
+            }
+        }
+
+        function handleKeyDown(e) {
+            if (isAnimating) return;
+
+            if (e.key === 'ArrowLeft') {
+                if (currentIndex > 0) {
+                    showSlide(currentIndex - 1);
+                }
+            } else if (e.key === 'ArrowRight') {
+                if (currentIndex < totalSlides - 1) {
+                    showSlide(currentIndex + 1);
+                }
+            }
+        }
+
+        // --- Modified Function for Button Modals ---
+        function showButtonModal(buttonData) {
+            const modalHeaderImage = document.getElementById('modalHeaderImage');
+            const buttonInfoModalLabel = document.getElementById('buttonInfoModalLabel');
+            const buttonInfoModalBody = document.getElementById('buttonInfoModalBody');
+
+            // Check if modal_header_image exists in buttonData
+            if (buttonData.modal_header_image) {
+                modalHeaderImage.src = buttonData.modal_header_image;
+                modalHeaderImage.classList.remove('hidden'); // Ensure it's visible
+            } else {
+                modalHeaderImage.src = ''; // Clear src
+                modalHeaderImage.classList.add('hidden'); // Hide the image
+            }
+            
+            buttonInfoModalLabel.textContent = buttonData.title;
+            buttonInfoModalBody.innerHTML = `<p>${buttonData.text}</p>`;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+[
+  {
+    "title": "Aliança Edênica",
+    "description": "Benção: Harmonia no Éden; <br> Maldição: desobediência trouxe morte espiritual.",
+    "verse": "E o SENHOR Deus ordenou ao homem, dizendo: De toda árvore do jardim comerás livremente, mas da árvore do conhecimento do bem e do mal não comerás; porque no dia em que dela comeres, certamente morrerás. (Gênesis 2:16-17, NTV)",
+    "background_image": "./edenic.png",
+    "buttons": [
+    {
+        "image": "./formação.png",
+        "title": "A Criação do Homem - Imagodei",
+        "text": "Deus cria o homem à Sua imagem e semelhança, dando a Adão autoridade sobre a terra (Gênesis 1:26-28)"
+      },
+    {
+        "image": "./arvore.png",
+        "title": "A Escolha",
+        "text": "Deus ordena a Adão que não coma do fruto da árvore do conhecimento do bem e do mal (Gênesis 2:16-17). A obediência a esta instrução estava ligada à vida eterna e ao bem-estar no Éden."
+      },
+    {
+        "image": "./protecao.png",
+        "title": "O Pecado",
+        "text": "A transgressão de Adão e Eva ao comerem do fruto resulta na expulsão do Éden e na introdução do pecado e da morte no mundo (Gênesis 3)."
+      }
+    ]
+  },
+  {
+    "title": "Aliança Adâmica",
+    "description": "Benção: Promessa de redenção; <br> Maldição: trabalho árduo e dor.",
+    "verse": "E ao homem disse: Porquanto deste ouvidos à voz de tua mulher e comeste da árvore de que te ordenei, dizendo: Não comerás dela, maldita é a terra por causa de ti; com dor comerás dela todos os dias da tua vida. (Gênesis 3:17, NTV)",
+    "background_image": "./adamic.png",
+    "buttons": [
+    {
+        "image": "./vitoria.png",
+        "title": "Promessa de Redenção",
+        "text": "Após a queda, Deus promete a Adão e à humanidade uma futura redenção através da 'semente da mulher' que esmagará a cabeça da serpente (Gênesis 3:15)."
+      },    {
+        "image": "./caim.png",
+        "title": "Morte, Trabalho Arduo e Dor",
+        "text": "Com Caim e Abel o fruto do pecado é revelado: a morte, por sua consequencia a destruição e a separação de Deus, Caim gera descendência pecaminosa. Sete nasce como sinal de redenção, dele surge descententes obedientes a Deus, até restar Noé"
+      }
+    ]
+  },
+  {
+    "title": "Aliança Noética",
+    "description": "Benção: Vida estável sem dilúvios; <br> Maldição: aliança incondicional.",
+    "verse": "E disse Deus: Este é o sinal da aliança que ponho entre mim e vós e entre toda alma vivente, que está convosco, por gerações perpétuas. (Gênesis 9:12, NTV)",
+    "background_image": "./noetic.png",
+    "buttons": [{
+        "image": "./diluvio.png",
+        "title": "O Lavar da Terra",
+        "text": "Por conta da perversidade da terra Deus manda um dilúvio, afim de dar um novo começo apartir de Noé."
+      },{
+        "image": "./babel.png",
+        "title": "Divisão de linguas e nações",
+        "text": "A partir de Noé a terra começou a ser repovoada, porém parou por sua decendencia, que desobedeceu a Deus e decidiu construir uma torre que tocasse os céus para 'fazer um nome para si', tamanha arrogancia desse povo fez com que Deus confudisse-lhes a lingua e nisso nações foram criadas"
+      }
+    ]
+  },
+  {
+    "title": "Aliança Abraâmica",
+    "description": "Benção: Descendência e terra prometidas; <br> Maldição: dificuldades se desobediente.",
+    "verse": "E disse o SENHOR a Abrão: Sai-te da tua terra, da tua parentela e da casa de teu pai, para a terra que te mostrarei; e farei de ti uma grande nação, e abençoar-te-ei e engrandecerei o teu nome; e sê tu uma bênção. (Gênesis 12:1-2, NTV)",
+    "background_image": "./abrahamic.png",
+    "buttons": [{
+        "image": "./isaque.png",
+        "title": "O Fruto da Desobediencia e da Promessa",
+        "text": "Isaque, filho da promessa, representa a realização da vontade divina, enquanto Ismael, fruto da desobediência, reflete as complicações que podem surgir quando se tenta antecipar ou desviar do plano de Deus."
+      },
+      {
+        "image": "./obediencia.png",
+        "title": "Provação e Provisão",
+        "text": "O Senhor testa o coração de Abraão, em sacrificar seu filho e revela seu plano salvador, por meio de Cristo."
+      }
+    ]
+  },
+  {
+    "title": "Aliança Canaânita",
+    "description": "Benção: Israel como Nação de Deus; <br> Maldição: Dificuldades terrenas.",
+    "verse": "E o SENHOR disse a Abraão: Na verdade, a tua descendência habitará em terra alheia, e será reduzida à escravidão, e será oprimida; mas depois sairão com grandes riquezas. (Gênesis 15:13-14, NTV)",
+    "background_image": "./canaanic.png",
+    "buttons": [      {
+        "image": "./israel.png",
+        "title": "Israel: A Noiva de Deus",
+        "text": "A aliança canaânica de Abraão, Isaque e Jacó é um fio condutor através da história bíblica, ligando a antiga promessa de Deus à formação da nação de Israel como povo de Deus, que deveria ser o modelo dentre os povos."
+      }
+    ]
+  },
+  {
+    "title": "Aliança Mosaica",
+    "description": "Benção: Prosperidade por obedecer; <br> Maldição: Exílio e destruição por desobedecer.",
+    "verse": "Se, pois, ouvires diligentemente a voz do SENHOR teu Deus, tendo cuidado de guardar todos os seus mandamentos que eu hoje te ordeno, o SENHOR teu Deus te exaltará sobre todas as nações da terra. (Deuteronômio 28:1, NTV)",
+    "background_image": "./mosaic.png",
+    "buttons": [
+    {
+      "image": "./terraprometida.png",
+      "title": "Terra Prometida",
+      "text": "A Terra Prometida é um tema central na narrativa bíblica, representando o cumprimento das promessas divinas feitas aos patriarcas. Deus jurou dar a Abraão, Isaque e Jacó uma terra que 'mana leite e mel'. A conquista da Terra Prometida sob a liderança de Josué simboliza a obediência e a confiança do povo de Israel em Deus. No entanto, a desobediência e a idolatria subsequentes resultaram na perda dessa bênção e no exílio. A Terra Prometida serve como um símbolo da restauração e da redenção futura, antecipando a esperança messiânica."
+    },
+    {
+      "image": "./juizes.png",
+      "title": "Teocracia: O Senhor Governa",
+      "text": "A teocracia em Israel representou um sistema de governo onde Deus era considerado o Rei supremo. Após a conquista da Terra Prometida, o período dos juízes ilustrou essa forma de governo, onde Deus era o líder direto de Israel. A teocracia enfatizava a dependência de Israel da soberania divina e a obediência à Lei de Moisés. Esse sistema de governo visava manter Israel distinto entre as nações e fiel ao seu Deus. No entanto, a demanda do povo por um rei visível marcou o início do fim da teocracia pura, levando à monarquia."
+    },
+    {
+      "image": "./monarquia.png",
+      "title": "Monarquia: O Povo Escolhe um Rei",
+      "text": "A transição para a monarquia em Israel foi motivada pelo desejo do povo por um líder visível, semelhante às nações ao seu redor. Apesar das advertências de Samuel sobre as implicações de ter um rei humano, o povo insistiu, dizendo: 'Queremos um rei sobre nós, para que nos julgue, como têm todas as nações' (1 Samuel 8:5). Deus, embora relutante, atendeu ao pedido do povo, ungindo Saul como o primeiro rei de Israel. A monarquia trouxe consigo tanto momentos de grandeza, sob reis como Davi e Salomão, quanto períodos de declínio espiritual e idolatria. A escolha por um rei humano sobre a liderança divina simbolizou a contínua luta de Israel entre a confiança em Deus e a busca por segurança humana."
+    }
+    ]
+  },
+  
+{
+  "title": "Aliança Davídica",
+  "description": "Benção: Trono eterno prometido; <br> Maldição: castigo de Deus.",
+  "verse": "A tua casa e o teu reino serão firmados para sempre diante de ti; o teu trono será estabelecido para sempre. (2 Samuel 7:16, NTV)",
+  "background_image": "./davidic.png",
+  "buttons": [
+    {
+      "image": "./promessa_davidica.png",
+      "title": "A Promessa Davídica",
+      "text": "Deus faz uma aliança com Davi, prometendo-lhe que seu trono será estabelecido para sempre. Essa promessa é um marco importante na história de Israel e aponta para um Messias futuro que governará eternamente."
+    },
+    {
+      "image": "./salomao.png",
+      "title": "Salomão e o Pecado",
+      "text": "Salomão, filho de Davi, cumpre promessa do pai e é dotado de sabedoria divina, mas seu reinado é marcado pelo declínio espiritual devido às suas muitas esposas estrangeiras que o levam à idolatria. Isso resulta na divisão do reino e no início do fim da unidade de Israel."
+    },
+    {
+      "image": "./exilio.png",
+      "title": "Divisão do Reino e Exílio",
+      "text": "A divisão do reino de Israel em dois - Israel ao norte e Judá ao sul - resulta em um período de instabilidade e idolatria. Ambos os reinos eventualmente caem sob o julgamento de Deus, com Israel sendo conquistado pela Assíria e Judá pelo Império Babilônico, levando ao exílio."
+    },
+    {
+      "image": "./daniel_esdras_neemias.png",
+      "title": "Reconstrução e Esperança: Daniel, Esdras e Neemias",
+      "text": "Após o exílio, figuras como Daniel, Esdras e Neemias desempenham papéis cruciais na reconstrução do Templo e na restauração da comunidade judaica. Daniel profetiza sobre os impérios futuros e a vinda do Messias, enquanto Esdras e Neemias lideram o esforço de reconstrução do Templo e das muralhas de Jerusalém, reacendendo a esperança no retorno do Messias."
+    }
+  ]
+}
+,
+  {
+    "title": "Nova Aliança",
+    "description": "Benção: Perdão e vida eterna em Cristo; <br> Maldição: separação eterna se rejeitada.",
+    "verse": "Mas a todos quantos o receberam, aos que creem no seu nome, deu-lhes o poder de serem feitos filhos de Deus; (João 1:12, NTV)",
+    "background_image": "./newcovenant.png",
+    "buttons": [
+    {
+      "image": "./nascimento_cristo.png",
+      "title": "O Nascimento de Jesus Cristo",
+      "text": "O nascimento de Jesus Cristo marca o cumprimento das profecias messiânicas do Antigo Testamento. Nascido de uma virgem, Jesus é o Filho de Deus encarnado, trazendo luz e salvação ao mundo. O evento é celebrado como um momento de grande alegria e esperança, simbolizando a chegada da redenção para a humanidade."
+    }
+    ]
+  }
+]
